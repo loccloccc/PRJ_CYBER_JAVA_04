@@ -52,19 +52,9 @@ public class OrderService {
     }
 
     // check so luon
-//    public boolean checkQuantity(String idName , int quantity){
-//        List<Food> list = foodDAO.getAllFood();
-//        String name = searchIDUser(idName);
-//        if(name == null){
-//            return false;
-//        }
-//        for(Food f : list){
-//            if (f.getStock() < quantity){
-//                return false;
-//            }
-//        }
-//        return true;
-//    }
+    public boolean checkQuantity(Food food , int quantity){
+        return food.getStock() >= quantity;
+    }
     // thêm order
     public void addOrder(){
 
@@ -124,23 +114,17 @@ public class OrderService {
 
             if(quantity <= 0){
                 System.out.println("Số lượng phải > 0");
+                continue;
             }
-//            if (checkQuantity(userId, quantity)){}
+
+            if(!checkQuantity(food, quantity)){
+                System.out.println("Số lượng sản phẩm không đủ");
+                quantity = -1;
+            }
 
         }while(quantity <= 0);
         // nhap thoi gian oeder
-        LocalDateTime orderTime = null;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        while (true) {
-            System.out.print("Nhập thời gian bắt đầu (yyyy-MM-dd HH:mm:ss): ");
-            String input = sc.nextLine().trim();
-            try {
-                orderTime = LocalDateTime.parse(input, formatter);
-                break;
-            } catch (DateTimeParseException e) {
-                System.out.println("Sai định dạng, vui lòng nhập lại!");
-            }
-        }
+        LocalDateTime orderTime = LocalDateTime.now();
 
         double totalPrice = food.getPrice() * quantity;
 
@@ -160,7 +144,6 @@ public class OrderService {
         boolean result2 = foodDAO.updateQuantity(foodName, quantity);
         if(result && result2){
             System.out.println("Thêm order thành công.");
-
         }
         else{
             System.out.println("Thêm order thất bại.");
@@ -254,6 +237,7 @@ public class OrderService {
 
         // tìm userId
         userId = searchIDUser(username);
+        System.out.println(userId);
 
         if(userId == null){
             System.out.println("User không tồn tại.");
@@ -269,7 +253,7 @@ public class OrderService {
 
         for(Order o : list){
 
-            if(o.getUser_id().equals(userId) && o.getStatus().equals("pending") && o.getStatus().equals("preparing")){
+            if(o.getUser_id().equals(userId) && (o.getStatus().equals("pending") || o.getStatus().equals("preparing"))){
                 System.out.printf("%-8d %-10s %-8d %-8d %-12.2f %-20s %-12s\n",
                         o.getOrder_id(),
                         o.getUser_id(),

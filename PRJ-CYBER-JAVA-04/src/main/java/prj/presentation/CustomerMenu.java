@@ -23,8 +23,7 @@ public class CustomerMenu {
             System.out.println("3 . Bật máy.");
             System.out.println("4 . Đặt đồ ăn.");
             System.out.println("5 . Trạng thái đơn hàng.");
-            System.out.println("6 . Tắt máy.");
-            System.out.println("0 . Thoát.");
+            System.out.println("0 . Tắt máy.");
 
             int choice = validateInput.inputChoice(sc);
 
@@ -45,6 +44,7 @@ public class CustomerMenu {
                     os.viewOrdersByUsername();
                     break;
                 case 0:
+                    bs.closeBooking();
                     return;
                 default:
                     System.out.println("Không có lựa chọn này !");

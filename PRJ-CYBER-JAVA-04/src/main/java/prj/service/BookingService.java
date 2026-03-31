@@ -207,10 +207,9 @@ public class BookingService {
         double costPc = (minutes / 60.0) * pricePc;
         double totalCost = costPc + priceOrder;
 
-        System.out.println("Thời gian chơi: " + minutes + " phút");
-        System.out.println("Tiền PC: " + costPc);
-        System.out.println("Tiền order: " + priceOrder);
-        System.out.println("Tổng tiền: " + totalCost);
+        System.out.printf("Tiền PC: %.2f\n", costPc);
+        System.out.printf("Tiền order: %.2f\n", priceOrder);
+        System.out.printf("Tổng tiền: %.2f\n", totalCost);
 
 
         if (pcDAO.closeStatus(pcId)) {
