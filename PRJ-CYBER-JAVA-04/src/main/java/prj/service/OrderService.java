@@ -237,7 +237,6 @@ public class OrderService {
 
         // tìm userId
         userId = searchIDUser(username);
-        System.out.println(userId);
 
         if(userId == null){
             System.out.println("User không tồn tại.");

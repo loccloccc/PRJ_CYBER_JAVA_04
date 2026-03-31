@@ -165,12 +165,6 @@ public class BookingService {
         userId = idUser(username);
         pcId = idPc(pcName);
 
-
-
-        System.out.println(startTime.getMinute());
-
-
-
         Booking b = new Booking(0, userId, pcId, startTime, null, 0);
 
         if (bookingDAO.createBooking(b)) {
